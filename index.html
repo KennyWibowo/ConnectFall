@@ -4,12 +4,17 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
         <script type="text/javascript" src="js/ConnectFall.js"></script>
         <link rel="stylesheet" type="text/css" href="style/style.css">
-       	<link rel="icon" href="res/tile_red.png">
+        <link rel="icon" href="res/tile_red.png">
     </head>
 
     <body ng-app="ConnectFall">
         <h1>Connect Fall!</h1>
         <p>Connect Four... But with a twist!</p>
-  		<div cf-tile></div>
+        <div ng-controller="Game">
+            <div ng-repeat="i in getNumber(height) track by $index">
+                <cf-tile ng-repeat="j in getNumber(width) track by $index">
+                <br>
+            </div>
+        </div>
     </body>
 </html>
