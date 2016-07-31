@@ -1,5 +1,6 @@
 var ConnectFall = angular.module('ConnectFall', []);
 
+
 ConnectFall.controller('Game', ['$scope', function($scope) {
     $scope.height = 6
     $scope.width = 7
@@ -8,7 +9,9 @@ ConnectFall.controller('Game', ['$scope', function($scope) {
 	}
 }])
 .directive('cfTile', function() {
+	var status_enum = ["empty", "red", "blue"]
+	var status = "empty"
     return {
-        template: "<img src='res/tile_empty.png'>" 
+        template: "<img src='res/tile_" + status + ".png'>" 
     };
 });
