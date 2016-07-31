@@ -11,8 +11,8 @@
         <h1>Connect Fall!</h1>
         <p>Connect Four... But with a twist!</p>
         <div ng-controller="Game">
-            <div ng-repeat="i in getNumber(height) track by $index">
-                <cf-tile ng-repeat="j in getNumber(width) track by $index">
+            <div ng-repeat="row in board track by $index">
+                <cf-tile ng-repeat="col in board[$index] track by $index">
                 <br>
             </div>
         </div>
