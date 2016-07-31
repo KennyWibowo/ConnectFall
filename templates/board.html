@@ -1,6 +1,7 @@
 <div ng-controller="Game">
-    <div ng-repeat="row in board track by $index">
-        <cf-tile ng-repeat="col in board[$index] track by $index">
-        <br>
+    <div ng-repeat="row in board track by $index" ng-init="rowIndex = $index" >
+            <cf-tile ng-repeat="col in board[rowIndex] track by $index" 
+                ng-init="colIndex = $index" tile-type="{{board[rowIndex][colIndex]}}"></cf-tile>
+        </ng-repeat>
     </div>
 </div>

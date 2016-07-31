@@ -23,14 +23,15 @@ ConnectFall.controller('Game', ['$scope', function($scope) {
    
 }])
 .directive('connectFall', function() {
-
     return {
         templateUrl: "templates/board.html"
     }
 })
 .directive('cfTile', function() {
-    var status = "empty"; // TODO parameterize this, maybe as a integer value?
     return {
-        template: "<img src='res/tile_" + status + ".png'>" 
+        scope: {
+            type: '@tileType'
+        },
+        template: "<img src='res/tile_{{type}}.png'>"
     };
 });
