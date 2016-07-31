@@ -22,6 +22,12 @@ ConnectFall.controller('Game', ['$scope', function($scope) {
     $scope.board = initBoard(width, height);
    
 }])
+.directive('connectFall', function() {
+
+	return {
+		templateUrl: "templates/board.html"
+	}
+})
 .directive('cfTile', function() {
 	var status = "empty"; // TODO parameterize this, maybe as a integer value?
     return {
