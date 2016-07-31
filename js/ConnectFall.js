@@ -1,5 +1,5 @@
-var ConnectFour = angular.module('ConnectFour', []);
+var ConnectFall = angular.module('ConnectFall', []);
 
-ConnectFour.controller('game_main', ['$scope', function(scope) {
-    // Add game logic here
-}]);
+ConnectFall.controller('game_main', ['$scope', function($scope) {
+    $scope.name = "ConnectFall"
+}])
