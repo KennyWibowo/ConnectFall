@@ -24,10 +24,10 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
     }
 
     function pushDown(board) {
-        for( i = 0; i < rootScope.height-1; i++ ) {
+        for( i = rootScope.height-2; i >= 0 ; i-- ) {
             for( j = 0; j < rootScope.width; j++ ) {
                 next = board[i+1][j];
-                curr = board[i+1][j];
+                curr = board[i][j];
 
                 // If lower piece is empty
                 if( next == rootScope.default_type ) {
@@ -38,7 +38,7 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
     }
 
     function addAt(board, type, col) {
-        board[0][col] = new String(type);
+        board[0][col] = type;
     }
 
     rootScope.nextTurn = function(row, col) {
