@@ -1,7 +1,7 @@
 var ConnectFall = angular.module('ConnectFall', []);
 
 
-ConnectFall.controller('Game', ['$scope', function($scope) {
+ConnectFall.controller('Game', ['$scope', '$rootScope', function($scope, $rootScope) {
     var width = 7;
     var height = 6;
 
@@ -32,6 +32,16 @@ ConnectFall.controller('Game', ['$scope', function($scope) {
         scope: {
             type: '@tileType'
         },
-        template: "<img src='res/tile_{{type}}.png'>"
+        template: "<img src='res/tile_{{type}}.png'>",
+        controller: ["$scope", function(scope) {
+            scope.init = function(element, row, col) {
+                element.addEventListener('click', function() {
+                    console.log('row: ' + row + ' col: ' + col);
+                });
+            }
+        }],
+        link: function(scope, element, attrs, ctlr) {
+            scope.init(element[0], scope.$parent.rowIndex, scope.$parent.colIndex)
+        }
     };
 });
