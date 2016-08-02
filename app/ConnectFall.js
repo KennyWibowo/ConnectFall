@@ -43,6 +43,7 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
 
     rootScope.nextTurn = function(row, col) {
         console.log('row: ' + row + ' col: ' + col);
+        // TODO add checking to see if next turn can be made.
         pushDown(scope.board);
         addAt(scope.board, "red", col)
         // TODO define logic for handling next turn
