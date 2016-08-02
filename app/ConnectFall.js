@@ -1,26 +1,53 @@
 var ConnectFall = angular.module('ConnectFall', []);
 
 
-ConnectFall.controller('Game', ['$scope', '$rootScope', function($scope, $rootScope) {
-    var width = 7;
-    var height = 6;
+ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScope) {
+    rootScope.height = 6;
+    rootScope.width = 7;
+    rootScope.turn = 1;
+    rootScope.status_enum = ["empty", "red", "blue"];
+    rootScope.player_enum = rootScope.status_enum.splice(1)
+    rootScope.default_type = rootScope.status_enum[0];
+    scope.board = initBoard(rootScope.height, rootScope.width);
 
-    function initBoard(width, height) {
+    function initBoard(height, width) {
         var board = new Array(height);
 
         for( i = 0; i < height; i++ ) {
             board[i] = new Array(width)
             for( j = 0; j < width; j++ ) {
-                board[i][j] = "empty"; // TODO maybe represent as integer value instead?
+                board[i][j] = rootScope.default_type;
             }
         }
 
-        return board
+        return board;
     }
 
-    $scope.status_enum = ["empty", "red", "blue"];
-    $scope.board = initBoard(width, height);
-   
+    function pushDown(board) {
+        for( i = 0; i < rootScope.height-1; i++ ) {
+            for( j = 0; j < rootScope.width; j++ ) {
+                next = board[i+1][j];
+                curr = board[i+1][j];
+
+                // If lower piece is empty
+                if( next == rootScope.default_type ) {
+                    board[i+1][j] = curr;
+                }
+            }
+        }
+    }
+
+    function addAt(board, type, col) {
+        board[0][col] = new String(type);
+    }
+
+    rootScope.nextTurn = function(row, col) {
+        console.log('row: ' + row + ' col: ' + col);
+        pushDown(scope.board);
+        addAt(scope.board, "red", col)
+        // TODO define logic for handling next turn
+    }
+
 }])
 .directive('connectFall', function() {
     return {
@@ -30,14 +57,14 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function($scope, $rootSc
 .directive('cfTile', function() {
     return {
         scope: {
-            type: '@tileType'
+            tileType: '=tileType'
         },
         restrict: 'E',
-        template: "<img ng-src='res/tile_{{type}}.png'>",
-        controller: ["$scope", function(scope) {
+        template: "<img ng-src='res/tile_{{tileType}}.png'>",
+        controller: ["$scope", "$rootScope", function(scope, rootScope) {
             scope.init = function(element, row, col) {
                 element.addEventListener('click', function() {
-                    console.log('row: ' + row + ' col: ' + col);
+                    rootScope.nextTurn(row, col)
                 });
             }
         }],
