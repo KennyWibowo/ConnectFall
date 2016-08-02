@@ -32,7 +32,8 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function($scope, $rootSc
         scope: {
             type: '@tileType'
         },
-        template: "<img src='res/tile_{{type}}.png'>",
+        restrict: 'E',
+        template: "<img ng-src='res/tile_{{type}}.png'>",
         controller: ["$scope", function(scope) {
             scope.init = function(element, row, col) {
                 element.addEventListener('click', function() {
