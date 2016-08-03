@@ -45,7 +45,7 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
         console.log('row: ' + row + ' col: ' + col);
         // TODO add checking to see if next turn can be made.
         pushDown(rootScope.board);
-        addAt(rootScope.board, "red", col)
+        addAt(rootScope.board, rootScope.status_enum[1], col)
         // TODO define logic for handling next turn
     }
 
@@ -61,6 +61,7 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
             tileType: '=tileType'
         },
         restrict: 'E',
+        replace: true,
         template: "<img ng-src='res/tile_{{tileType}}.png'>",
         controller: ["$scope", "$rootScope", function(scope, rootScope) {
             scope.init = function(element, row, col) {
