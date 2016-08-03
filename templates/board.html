@@ -1,9 +1,8 @@
 <div ng-controller="Game">
-    <div ng-repeat="row in board track by $index" ng-init="rowIndex = $index" >
-        <cf-tile ng-repeat="col in board[rowIndex] track by $index" 
-            ng-show="board[rowIndex][colIndex]"
-            ng-init="colIndex = $index"
-            tile-type="board[rowIndex][colIndex]">
+    <div ng-repeat="row in getNumber($root.height)">
+        <cf-tile ng-repeat="col in getNumber($root.width)"
+            tile-row="row"
+            tile-col="col">
         </cf-tile>
     </div>
 </div>

@@ -8,44 +8,48 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
     rootScope.status_enum = ["empty", "red", "blue"];
     rootScope.player_enum = rootScope.status_enum.splice(1)
     rootScope.default_type = rootScope.status_enum[0];
-    rootScope.board = initBoard(rootScope.height, rootScope.width);
+    rootScope.board = [];
 
-    function initBoard(height, width) {
-        var board = new Array(height);
-
-        for( i = 0; i < height; i++ ) {
-            board[i] = new Array(width)
-            for( j = 0; j < width; j++ ) {
-                board[i][j] = rootScope.default_type;
-            }
+    scope.getNumber = function(num) {
+        num_arr = new Array(num); 
+        for( i = 0; i < num; i++ ) {
+            num_arr[i] = i;
         }
-
-        return board;
+        return num_arr;
     }
 
     function pushDown(board) {
-        for( i = rootScope.height-2; i >= 0 ; i-- ) {
-            for( j = 0; j < rootScope.width; j++ ) {
-                next = board[i+1][j];
-                curr = board[i][j];
+        for( row = rootScope.height-2; row >= 0 ; row-- ) {
+            for( col = 0; col < rootScope.width; col++ ) {
+                next = board[row+1][col];
+                curr = board[row][col];
 
                 // If lower piece is empty
                 if( next == rootScope.default_type ) {
-                    board[i+1][j] = curr;
+                    next.setValue(curr.value);
+                    curr.setValue(rootScope.default_type);
                 }
             }
         }
     }
 
     function addAt(board, type, col) {
-        board[0][col] = type;
+        board[0][col].setValue(type);
+    }
+
+    rootScope.registerTile = function (row, col, scope) {
+        if( row == rootScope.board.length ) {
+            rootScope.board.push([]);
+        }
+
+        rootScope.board[row][col] = scope;
     }
 
     rootScope.nextTurn = function(row, col) {
         console.log('row: ' + row + ' col: ' + col);
         // TODO add checking to see if next turn can be made.
         pushDown(rootScope.board);
-        addAt(rootScope.board, rootScope.status_enum[1], col)
+        addAt(rootScope.board, "red", col)
         // TODO define logic for handling next turn
     }
 
@@ -58,20 +62,31 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
 .directive('cfTile', function() {
     return {
         scope: {
-            tileType: '=tileType'
+            tileRow: '=',
+            tileCol: '='
         },
         restrict: 'E',
-        replace: true,
-        template: "<img ng-src='res/tile_{{tileType}}.png'>",
+        template: "<img ng-src='{{res_value}}'>",
         controller: ["$scope", "$rootScope", function(scope, rootScope) {
+            scope.value = rootScope.default_type;
+
+            scope.setValue = function(val) {
+                scope.value = val;
+                scope.res_value = 'res/tile_' + val + '.png';
+            }
+
+            scope.setValue(scope.value);
+
             scope.init = function(element, row, col) {
+                rootScope.registerTile(row, col, scope);
+
                 element.addEventListener('click', function() {
                     rootScope.nextTurn(row, col);
                 });
             }
         }],
         link: function(scope, element, attrs, ctlr) {
-            scope.init(element[0], scope.$parent.rowIndex, scope.$parent.colIndex)
+            scope.init(element[0], scope.tileRow, scope.tileCol)
         }
     };
 });
