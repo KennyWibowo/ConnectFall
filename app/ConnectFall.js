@@ -43,6 +43,23 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
         board[0][col].setValue(type);
     }
 
+    function applyAllBoard() {
+        for( var row = 0; row < rootScope.height; row++ ) {
+            for( var col = 0; col < rootScope.width; col++ ) {
+                rootScope.board[row][col].$apply();
+            }
+        }
+    }
+
+    function isValidMove(col) {
+        for( var row = 0; row < rootScope.height; row++ ) {
+            if(rootScope.board[row][col].value == rootScope.default_type) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     rootScope.registerTile = function (row, col, scope) {
         if( row == rootScope.board.length ) {
             rootScope.board.push([]);
@@ -51,23 +68,20 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
         rootScope.board[row][col] = scope;
     }
 
-    function applyAllBoard() {
-        for( var row = 0; row < rootScope.height ; row++ ) {
-            for( var col = 0; col < rootScope.width; col++ ) {
-                rootScope.board[row][col].$apply();
-            }
-        }
-    }
-
     rootScope.nextTurn = function(row, col) {
         console.log('row: ' + row + ' col: ' + col);
-        var next = scope.current_player;
-        rootScope.turn++;
-        scope.current_player = getNextTurn(rootScope.turn);
-        pushDown(rootScope.board);
-        addAt(rootScope.board, next, col);
-        applyAllBoard();
-        // TODO define logic for handling next turn
+
+        if(isValidMove(col)) {
+            var next = scope.current_player;
+            rootScope.turn++;
+            scope.current_player = getNextTurn(rootScope.turn);
+            pushDown(rootScope.board);
+            addAt(rootScope.board, next, col);
+            applyAllBoard();
+        } else {
+            // do something
+        }
+        
     }
 
 }])
