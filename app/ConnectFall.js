@@ -1,7 +1,7 @@
-var ConnectFall = angular.module('ConnectFall', []);
+var connectFall = angular.module('connectFall', []);
 
 
-ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScope) {
+connectFall.controller('GameController', ['$scope', '$rootScope', function(scope, rootScope) {
     rootScope.height = 6;
     rootScope.width = 7;
     rootScope.turn = 1;
