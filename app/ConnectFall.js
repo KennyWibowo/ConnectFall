@@ -78,7 +78,6 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
     }
 
     rootScope.nextTurn = function(row, col) {
-        console.log('row: ' + row + ' col: ' + col);
 
         if(isValidMove(col)) {
             setMessage("info", null);
