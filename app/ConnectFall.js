@@ -7,9 +7,12 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
     rootScope.turn = 1;
     rootScope.status_enum = ["empty", "red", "blue"];
     rootScope.player_enum = rootScope.status_enum.splice(1)
-    scope.current_player = rootScope.player_enum[rootScope.turn - 1]
     rootScope.default_type = rootScope.status_enum[0];
     rootScope.board = [];
+
+    scope.current_player = rootScope.player_enum[rootScope.turn - 1]
+    scope.alertType = null;
+    scope.message = null;
 
     scope.getNumber = function(num) {
         num_arr = new Array(num); 
@@ -60,6 +63,12 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
         return false;
     }
 
+    function setMessage(alertType, message) {
+        scope.alertType = alertType;
+        scope.message = message;
+        scope.$apply();
+    }
+
     rootScope.registerTile = function (row, col, scope) {
         if( row == rootScope.board.length ) {
             rootScope.board.push([]);
@@ -72,6 +81,7 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
         console.log('row: ' + row + ' col: ' + col);
 
         if(isValidMove(col)) {
+            setMessage("info", "All good!");
             var next = scope.current_player;
             rootScope.turn++;
             scope.current_player = getNextTurn(rootScope.turn);
@@ -79,8 +89,10 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
             addAt(rootScope.board, next, col);
             applyAllBoard();
         } else {
-            // do something
+            setMessage("danger", "Error: Invalid move!");
         }
+
+        scope.$apply();
         
     }
 

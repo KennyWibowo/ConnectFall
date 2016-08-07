@@ -27,3 +27,10 @@ strong {
 a {
     color: #e81c4f;
 }
+
+.center {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    padding: 10px;
+}
