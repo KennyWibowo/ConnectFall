@@ -2,4 +2,9 @@
 
 Connect Four... but with a twist!
 
-Currently in development, stay tuned!
+TODO List
+---------
+ [ ] Win-checking
+ [ ] Game resetting
+ [ ] Parameterization
+ [ ] Online multiplayer support?
