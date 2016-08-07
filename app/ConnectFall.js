@@ -81,7 +81,7 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
         console.log('row: ' + row + ' col: ' + col);
 
         if(isValidMove(col)) {
-            setMessage("info", "All good!");
+            setMessage("info", null);
             var next = scope.current_player;
             rootScope.turn++;
             scope.current_player = getNextTurn(rootScope.turn);
@@ -99,6 +99,7 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
 }])
 .directive('connectFall', function() {
     return {
+        replace: true,
         templateUrl: "templates/board.html"
     }
 })
