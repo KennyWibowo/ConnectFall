@@ -12,20 +12,20 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
 
     scope.getNumber = function(num) {
         num_arr = new Array(num); 
-        for( i = 0; i < num; i++ ) {
+        for( var i = 0; i < num; i++ ) {
             num_arr[i] = i;
         }
         return num_arr;
     }
 
     function pushDown(board) {
-        for( row = rootScope.height-2; row >= 0 ; row-- ) {
-            for( col = 0; col < rootScope.width; col++ ) {
+        for( var row = rootScope.height-2; row >= 0 ; row-- ) {
+            for( var col = 0; col < rootScope.width; col++ ) {
                 next = board[row+1][col];
                 curr = board[row][col];
 
                 // If lower piece is empty
-                if( next == rootScope.default_type ) {
+                if( next.value == rootScope.default_type ) {
                     next.setValue(curr.value);
                     curr.setValue(rootScope.default_type);
                 }
@@ -45,11 +45,20 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
         rootScope.board[row][col] = scope;
     }
 
+    function applyAllBoard() {
+        for( var row = 0; row < rootScope.height ; row++ ) {
+            for( var col = 0; col < rootScope.width; col++ ) {
+                rootScope.board[row][col].$apply();
+            }
+        }
+    }
+
     rootScope.nextTurn = function(row, col) {
         console.log('row: ' + row + ' col: ' + col);
         // TODO add checking to see if next turn can be made.
         pushDown(rootScope.board);
-        addAt(rootScope.board, "red", col)
+        addAt(rootScope.board, "red", col);
+        applyAllBoard();
         // TODO define logic for handling next turn
     }
 
