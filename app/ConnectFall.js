@@ -7,6 +7,7 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
     rootScope.turn = 1;
     rootScope.status_enum = ["empty", "red", "blue"];
     rootScope.player_enum = rootScope.status_enum.splice(1)
+    scope.current_player = rootScope.player_enum[rootScope.turn - 1]
     rootScope.default_type = rootScope.status_enum[0];
     rootScope.board = [];
 
@@ -33,6 +34,11 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
         }
     }
 
+    function getNextTurn(turn) {
+        var next = (turn - 1) % rootScope.player_enum.length;
+        return rootScope.player_enum[next];
+    }
+
     function addAt(board, type, col) {
         board[0][col].setValue(type);
     }
@@ -55,9 +61,11 @@ ConnectFall.controller('Game', ['$scope', '$rootScope', function(scope, rootScop
 
     rootScope.nextTurn = function(row, col) {
         console.log('row: ' + row + ' col: ' + col);
-        // TODO add checking to see if next turn can be made.
+        var next = scope.current_player;
+        rootScope.turn++;
+        scope.current_player = getNextTurn(rootScope.turn);
         pushDown(rootScope.board);
-        addAt(rootScope.board, "red", col);
+        addAt(rootScope.board, next, col);
         applyAllBoard();
         // TODO define logic for handling next turn
     }
