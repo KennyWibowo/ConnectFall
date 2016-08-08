@@ -10,6 +10,7 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
     rootScope.default_type = rootScope.status_enum[0];
     rootScope.board = [];   //board is empty array
 
+    scope.current_player =  null;
     scope.next_player = rootScope.player_enum[rootScope.turn - 1]
     scope.alertType = null;
     scope.message = null;
@@ -37,16 +38,18 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
         }
     }
 
-    function getNextTurn(turn) {
-        var curr = (turn - 1) % rootScope.player_enum.length;
-        var next = (turn) % rootScope.player_enum.length
+    function advanceTurn() {
+        var curr = (rootScope.turn - 1) % rootScope.player_enum.length;
+        var next = (rootScope.turn) % rootScope.player_enum.length
         
         rootScope.turn++;
 
-        var prev_player = rootScope.player_enum[curr]
+        scope.current_player = rootScope.player_enum[curr]
         scope.next_player = rootScope.player_enum[next];
+
         scope.$apply();
-        return prev_player;
+        
+        return scope.current_player;
     }
 
     function addAt(board, type, col) {
@@ -132,7 +135,7 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
 
         if(isValidMove(col)) {
             setMessage("info", null);
-            var current_player = getNextTurn(rootScope.turn); 
+            var current_player = advanceTurn(); 
             pushDown(rootScope.board);
             addAt(rootScope.board, current_player, col);
             applyAllBoard();
