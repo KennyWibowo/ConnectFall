@@ -2,13 +2,13 @@ var connectFall = angular.module('connectFall', []);
 
 
 connectFall.controller('GameController', ['$scope', '$rootScope', function(scope, rootScope) {
-    rootScope.height = 6;
+    rootScope.height = 6; 
     rootScope.width = 7;
     rootScope.turn = 1;
     rootScope.status_enum = ["empty", "red", "blue"];
-    rootScope.player_enum = rootScope.status_enum.splice(1)
+    rootScope.player_enum = rootScope.status_enum.splice(1) 
     rootScope.default_type = rootScope.status_enum[0];
-    rootScope.board = [];
+    rootScope.board = [];   //board is empty array
 
     scope.current_player = rootScope.player_enum[rootScope.turn - 1]
     scope.alertType = null;
@@ -69,6 +69,48 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
         scope.$apply();
     }
 
+    function checkThree(i,j,color){ //THERE IS PROBABLY A DYNAMMIC PROGRAMMING SOLUTION TO THIS.
+        var tileCol = rootScope.board[i][j].value;
+        var check = false; //this is lame
+        if(tileCol == rootScope.default_type){
+            return false;
+        }else{
+            if(i <= rootScope.height - 4){
+                if(rootScope.board[i+1][j].value == color && rootScope.board[i+2][j].value == color && rootScope.board[i+3][j].value==color){
+                    return true;
+                }
+            }
+            if(j <= rootScope.width - 4){
+                if(rootScope.board[i][j+1].value == color && rootScope.board[i][j+2].value == color && rootScope.board[i][j+3].value == color){
+                    return true;
+                }
+            }
+            if(i <= rootScope.height - 4 && j <= rootScope.width - 4){
+                if(rootScope.board[i+1][j+1].value == color && rootScope.board[i+2][j+2].value == color && rootScope.board[i+3][j+3].value == color){
+                    return true;
+                }
+            }
+            if(i <= rootScope.height - 4 && j >= 3){
+               if(rootScope.board[i+1][j-1].value == color && rootScope.board[i+2][j-2].value == color && rootScope.board[i+3][j-3].value == color){
+                return true;
+               }
+            }
+        }
+        return check;
+    }
+
+    //VICTORY CHECK
+    function checkWin(color){
+        for(i = 0; i < rootScope.height; i++) {
+            for(j = 0; j < rootScope.width; j++){
+                if(checkThree(i,j,color)){
+                    setMessage("info", "Victory!" + color);
+                }
+            }
+        }
+    }
+
+
     rootScope.registerTile = function (row, col, scope) {
         if( row == rootScope.board.length ) {
             rootScope.board.push([]);
@@ -78,7 +120,7 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
     }
 
     rootScope.nextTurn = function(row, col) {
-
+        
         if(isValidMove(col)) {
             setMessage("info", null);
             var next = scope.current_player;
@@ -86,7 +128,9 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
             scope.current_player = getNextTurn(rootScope.turn);
             pushDown(rootScope.board);
             addAt(rootScope.board, next, col);
+            checkWin(scope.current_player);
             applyAllBoard();
+
         } else {
             setMessage("danger", "Error: Invalid move!");
         }
