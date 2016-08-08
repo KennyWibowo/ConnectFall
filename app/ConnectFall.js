@@ -69,10 +69,8 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
         scope.$apply();
     }
 
-    function checkThree(i,j,color){ //THERE IS PROBABLY A DYNAMMIC PROGRAMMING SOLUTION TO THIS.
-        var tileCol = rootScope.board[i][j].value;
-        var check = false; //this is lame
-        if(tileCol == rootScope.default_type){
+    function checkThree(i,j,color){ 
+        if(color == rootScope.default_type){
             return false;
         }else{
             if(i <= rootScope.height - 4){
@@ -96,15 +94,15 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
                }
             }
         }
-        return check;
+        return false;
     }
 
     //VICTORY CHECK
-    function checkWin(color){
+    function checkWin(){
         for(i = 0; i < rootScope.height; i++) {
             for(j = 0; j < rootScope.width; j++){
-                if(checkThree(i,j,color)){
-                    setMessage("success", "Victory! " + color + " wins!");
+                if(checkThree(i,j,rootScope.board[i][j].value)){
+                    setMessage("success", "Victory! " + rootScope.board[i][j].value + " wins!");
                 }
             }
         }
@@ -128,7 +126,7 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
             pushDown(rootScope.board);
             addAt(rootScope.board, current_player, col);
             applyAllBoard();
-            checkWin(current_player);
+            checkWin();
 
         } else {
             setMessage("danger", "Error: Invalid move!");
