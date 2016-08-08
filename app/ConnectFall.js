@@ -104,12 +104,11 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
         for(i = 0; i < rootScope.height; i++) {
             for(j = 0; j < rootScope.width; j++){
                 if(checkThree(i,j,color)){
-                    setMessage("info", "Victory!" + color);
+                    setMessage("success", "Victory! " + color + " wins!");
                 }
             }
         }
     }
-
 
     rootScope.registerTile = function (row, col, scope) {
         if( row == rootScope.board.length ) {
@@ -123,13 +122,13 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
         
         if(isValidMove(col)) {
             setMessage("info", null);
-            var next = scope.current_player;
+            var current_player = scope.current_player;
             rootScope.turn++;
             scope.current_player = getNextTurn(rootScope.turn);
             pushDown(rootScope.board);
-            addAt(rootScope.board, next, col);
-            checkWin(scope.current_player);
+            addAt(rootScope.board, current_player, col);
             applyAllBoard();
+            checkWin(current_player);
 
         } else {
             setMessage("danger", "Error: Invalid move!");
