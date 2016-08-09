@@ -4,7 +4,7 @@ Connect Four... but with a twist!
 
 TODO List
 ---------
- - [ ] Win-checking
- - [ ] Game resetting
+ - [x] Win-checking
+ - [x] Game resetting
  - [ ] Parameterization
  - [ ] Online multiplayer support?
