@@ -96,6 +96,10 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
         }
     }
 
+    function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
     function checkThree(i,j,color){ 
         if(color == rootScope.default_type){
             return false;
@@ -129,7 +133,7 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
         for(i = 0; i < rootScope.height; i++) {
             for(j = 0; j < rootScope.width; j++){
                 if(checkThree(i,j,rootScope.board[i][j].value)){
-                    return true;
+                    return rootScope.board[i][j].value;
                 }
             }
         }
@@ -145,7 +149,7 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
     }
 
     rootScope.nextTurn = function(row, col) {
-        
+
         if(checkWin()) {
             resetGame();
             clearBoard();
@@ -157,8 +161,11 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
             var current_player = advanceTurn(); 
             pushDown(rootScope.board);
             addAt(rootScope.board, current_player, col);
-            if(checkWin()) {
-                setMessage("success", "Victory! " + rootScope.board[i][j].value + " wins!");
+
+            var winner = checkWin();
+
+            if(winner) {
+                setMessage("success", "Victory! " + capitalizeFirstLetter(winner) + " wins! (Click board to reset)");
             };
 
         } else {
