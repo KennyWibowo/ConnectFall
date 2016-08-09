@@ -79,6 +79,23 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
         scope.$apply();
     }
 
+    function resetGame() {
+        rootScope.turn = 1;
+        scope.current_player =  null;
+        scope.next_player = rootScope.player_enum[rootScope.turn - 1]
+        scope.$apply();
+        setMessage("info", null); // clear the message
+    }
+
+    function clearBoard() {
+        for( var row = 0; row < rootScope.height; row++ ) {
+            for( var col = 0; col < rootScope.width; col++ ) {
+                rootScope.board[row][col].setValue(rootScope.default_type);
+                rootScope.board[row][col].$apply();
+            }
+        }
+    }
+
     function checkThree(i,j,color){ 
         if(color == rootScope.default_type){
             return false;
@@ -130,15 +147,16 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
     rootScope.nextTurn = function(row, col) {
         
         if(checkWin()) {
+            resetGame();
+            clearBoard();
             return;
         }
 
         if(isValidMove(col)) {
-            setMessage("info", null);
+            setMessage("info", null); // clear the message
             var current_player = advanceTurn(); 
             pushDown(rootScope.board);
             addAt(rootScope.board, current_player, col);
-            applyAllBoard();
             if(checkWin()) {
                 setMessage("success", "Victory! " + rootScope.board[i][j].value + " wins!");
             };
