@@ -1,4 +1,11 @@
 <div ng-controller="GameController" style="padding-bottom:40px;">
+    <style>
+    .cf-gameboard {
+        width: 270px;
+        margin: auto;
+    }
+    </style>
+
     <div ng-show="message" style="position:fixed;" class="alert"
         ng-class="{  'alert-success': alertType=='success', 
                      'alert-info': alertType=='info', 
@@ -6,7 +13,7 @@
                      'alert-danger': alertType=='danger'}"> {{message}}</div>
     <h2>Turn: <img style="vertical-align: text-bottom;" ng-src='res/tile_{{next_player}}.png'></h2>
 
-    <div ng-repeat="row in getNumber($root.height)">
+    <div class="cf-gameboard center" ng-repeat="row in getNumber($root.height)">
         <cf-tile ng-repeat="col in getNumber($root.width)"
             tile-row="row"
             tile-col="col">

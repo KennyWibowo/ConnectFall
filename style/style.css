@@ -2,6 +2,7 @@
 
 body {
     margin: 0 auto;
+    max-width: 60em;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     line-height: 1.5;
     padding: 4em 1em;
@@ -29,7 +30,5 @@ a {
 
 .center {
     margin: auto;
-    width: 50%;
     text-align: center;
-    padding: 10px;
 }
