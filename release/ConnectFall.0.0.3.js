@@ -186,7 +186,7 @@ connectFall.config(function($sceDelegateProvider) {
 .directive('connectFall', function() {
     return {
         replace: true,
-        templateUrl: "https://cdn.rawgit.com/KennyWibowo/ConnectFall/gh-pages/templates/board.html"
+        templateUrl: "https://cdn.rawgit.com/KennyWibowo/ConnectFall/0.0.3/templates/board.html"
     }
 })
 .directive('cfTile', function() {
