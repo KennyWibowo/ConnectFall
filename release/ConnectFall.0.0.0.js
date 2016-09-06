@@ -1,7 +1,13 @@
 var connectFall = angular.module('connectFall', []);
 
 
-connectFall.controller('GameController', ['$scope', '$rootScope', function(scope, rootScope) {
+connectFall.config(function($sceDelegateProvider) {
+  $sceDelegateProvider.resourceUrlWhitelist([
+    'self',
+    'https://cdn.rawgit.com/**'
+  ]);
+})
+.controller('GameController', ['$scope', '$rootScope', function(scope, rootScope) {
     rootScope.height = 6; 
     rootScope.width = 7;
     rootScope.turn = 1;
@@ -180,7 +186,7 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
 .directive('connectFall', function() {
     return {
         replace: true,
-        templateUrl: "templates/board.html"
+        templateUrl: "https://cdn.rawgit.com/KennyWibowo/ConnectFall/gh-pages/templates/board.html"
     }
 })
 .directive('cfTile', function() {
