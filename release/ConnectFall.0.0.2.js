@@ -202,7 +202,7 @@ connectFall.config(function($sceDelegateProvider) {
 
             scope.setValue = function(val) {
                 scope.value = val;
-                scope.res_value = 'http://kennywibowo.github.io/ConnectFall/res/tile_' + val + '.png';
+                scope.res_value = 'https://kennywibowo.github.io/ConnectFall/res/tile_' + val + '.png';
             }
 
             scope.setValue(scope.value);
