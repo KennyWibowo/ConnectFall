@@ -16,7 +16,7 @@
                      'alert-info': alertType=='info', 
                      'alert-warning': alertType=='warning', 
                      'alert-danger': alertType=='danger'}"> {{message}}</div>
-    <h2>Turn: <img style="vertical-align: text-bottom;" ng-src='https://cdn.rawgit.com/KennyWibowo/ConnectFall/0.0.1/res/tile_{{next_player}}.png'></h2>
+    <h2>Turn: <img style="vertical-align: text-bottom;" ng-src='http://kennywibowo.github.io/ConnectFall/res/tile_{{next_player}}.png'></h2>
 
     <div class="cf-gameboard center" ng-repeat="row in getNumber($root.height)">
         <cf-tile ng-repeat="col in getNumber($root.width)"
