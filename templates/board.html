@@ -1,5 +1,9 @@
 <div ng-controller="GameController" style="padding-bottom:40px;">
     <style>
+    .cf-gameboard-container {
+        padding-bottom: 1em;
+    }
+
     .cf-gameboard {
         width: 270px;
         margin: auto;
@@ -9,19 +13,21 @@
         margin: auto;
         text-align: center;
     }
-    </style>
 
-    <div ng-show="message" style="position:fixed;" class="alert"
-        ng-class="{  'alert-success': alertType=='success', 
-                     'alert-info': alertType=='info', 
-                     'alert-warning': alertType=='warning', 
-                     'alert-danger': alertType=='danger'}"> {{message}}</div>
+    .cf-tile {
+        padding: 3px;
+    }
+    </style>
     <h2>Turn: <img style="vertical-align: text-bottom;" ng-src='https://kennywibowo.github.io/ConnectFall/res/tile_{{next_player}}.png'></h2>
 
-    <div class="cf-gameboard center" ng-repeat="row in getNumber($root.height)">
-        <cf-tile ng-repeat="col in getNumber($root.width)"
-            tile-row="row"
-            tile-col="col">
-        </cf-tile>
+    <div class="cf-gameboard-container">
+        <div class="cf-gameboard center" ng-repeat="row in getNumber($root.height)">
+            <cf-tile ng-repeat="col in getNumber($root.width)"
+                tile-row="row"
+                tile-col="col">
+            </cf-tile>
+        </div>
     </div>
+
+    <div ng-show="message" class="alert"> {{message}}</div>
 </div>

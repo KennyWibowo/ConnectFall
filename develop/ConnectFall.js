@@ -190,7 +190,7 @@ connectFall.controller('GameController', ['$scope', '$rootScope', function(scope
             tileCol: '='
         },
         restrict: 'E',
-        template: "<img ng-src='{{res_value}}'>",
+        template: "<img class='cf-tile' ng-src='{{res_value}}'>",
         controller: ["$scope", "$rootScope", function(scope, rootScope) {
             scope.value = rootScope.default_type;
 
