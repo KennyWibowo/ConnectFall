@@ -4,7 +4,13 @@
 
     var connectFall = angular.module('connectFall', []);
 
-    connectFall.controller('GameController', ['$scope', '$rootScope', function(scope, rootScope) {
+    connectFall.config(function($sceDelegateProvider) {
+      $sceDelegateProvider.resourceUrlWhitelist([
+        'self',
+        'https://kennywibowo.github.io/**'
+      ]);
+    })
+    .controller('GameController', ['$scope', '$rootScope', function(scope, rootScope) {
         rootScope.height = 6; 
         rootScope.width = 7;
         rootScope.turn = 1;
