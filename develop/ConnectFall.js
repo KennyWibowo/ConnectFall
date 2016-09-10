@@ -1,7 +1,5 @@
 (function(angular) {
 
-    console.log(angular);
-
     var connectFall = angular.module('connectFall', []);
 
     connectFall.config(function($sceDelegateProvider) {
